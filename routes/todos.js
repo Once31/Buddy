@@ -1,16 +1,8 @@
-import fetch from "node-fetch";
+import express from "express";
+const router = express.Router();
 
-const todos = async (req, res) => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+import todosController from "../controllers/todosController.js";
 
-  const jsonData = await response.json();
-  const data = jsonData.map((data) => {
-    const id = data.id;
-    const title = data.title;
-    const completed = data.completed;
-    return { id, title, completed };
-  });
-  res.json(data);
-};
+router.get("/", todosController);
 
-export default todos;
+export default router;

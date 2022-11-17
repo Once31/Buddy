@@ -1,25 +1,8 @@
-import path from "node:path";
-import fetch from "node-fetch";
+import express from "express";
+const router = express.Router();
 
-const user = async (req, res) => {
-  const userId = path.basename(req.path);
+import userController from "../controllers/userController.js";
 
-  const todosData = await fetch("https://jsonplaceholder.typicode.com/todos");
-  const jsonTodos = await todosData.json();
+router.get("/:id", userController);
 
-  const todos = jsonTodos.filter((todo) => todo.userId === parseInt(userId));
-
-  const user = await fetch(
-    `https://jsonplaceholder.typicode.com/users/${userId}`
-  );
-
-  const jsonUser = await user.json();
-
-  const id = jsonUser.id;
-  const name = jsonUser.name;
-  const email = jsonUser.email;
-  const phone = jsonUser.phone;
-  res.json({ id, name, email, phone, todos });
-};
-
-export default user;
+export default router;
